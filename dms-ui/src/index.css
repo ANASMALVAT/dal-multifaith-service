@@ -95,6 +95,26 @@ code {
   margin-top: 90px;
 }
 
+.option-first{
+  margin-top: 30px;
+}
+
+.options{
+  margin-top: 30px;
+}
+
+.question-bold{
+  color : #4d9cd4;
+  font-weight: bold;
+}
+.questionnaire-card {
+  background-color: #ffffff;
+  font-weight: medium;
+  padding: 25px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
 .prl-img-container {
   border-radius: 50%;
   position: absolute;
