@@ -68,7 +68,7 @@ const Questionnaire = () => {
         <h4>Spiritual Wellness Questions</h4>
         {questions.map((question) => (
           <div>
-            <div className="questionnaire-card">
+            <div className="box-card">
               <div className={"question-bold"}>
                 <span>{question.id + ")"} </span>
                 <span>{question.question_text}</span>
