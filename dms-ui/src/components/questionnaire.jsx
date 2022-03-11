@@ -1,11 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../services/questions";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Questionnaire = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswer] = useState({});
   const [score, setScore] = useState(0);
+
+  toast.configure();
 
   useEffect(() => {
     const getData = async () => {
@@ -37,7 +41,13 @@ const Questionnaire = () => {
         }
       }
     } else {
-      console.log("Not All are Selected");
+      toast.error("Not Attended all Questions", {
+        position: "top-right",
+        autoClose: 500,
+        hideProgressBar: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
