@@ -5,6 +5,7 @@ import { getQuestions } from "../services/questions";
 const Questionnaire = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswer] = useState({});
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const getData = async () => {
@@ -16,6 +17,28 @@ const Questionnaire = () => {
 
   const handleRadioClick = (event) => {
     setAnswer((prev) => ({ ...prev, [event.target.id]: event.target.value }));
+  };
+
+  const calculateScore = (event) => {
+    let displayScore = 0;
+    setScore(0);
+
+    if (Object.keys(questions).length === Object.keys(answers).length) {
+      for (let key in answers) {
+        if (answers[key] === "Very seldom") {
+          setScore((prev) => prev + 0);
+          displayScore += 0;
+        } else if (answers[key] === "Sometimes (occasionally)") {
+          setScore((prev) => prev + 1);
+          displayScore += 1;
+        } else {
+          setScore((prev) => prev + 2);
+          displayScore += 2;
+        }
+      }
+    } else {
+      console.log("Not All are Selected");
+    }
   };
 
   return (
@@ -54,7 +77,11 @@ const Questionnaire = () => {
         ))}
       </div>
       <div className="row common-margin-top">
-        <button type="button" className="btn btn-primary btn-text-bold">
+        <button
+          type="button"
+          className="btn btn-primary btn-text-bold"
+          onClick={calculateScore}
+        >
           Calculate the Score
         </button>
       </div>
