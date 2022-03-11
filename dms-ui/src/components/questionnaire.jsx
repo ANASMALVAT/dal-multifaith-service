@@ -23,6 +23,16 @@ const Questionnaire = () => {
     setAnswer((prev) => ({ ...prev, [event.target.id]: event.target.value }));
   };
 
+  const showScore = (displayScore) => {
+    toast.success("Your Score is:" + displayScore, {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const calculateScore = (event) => {
     let displayScore = 0;
     setScore(0);
@@ -40,6 +50,7 @@ const Questionnaire = () => {
           displayScore += 2;
         }
       }
+      showScore(displayScore);
     } else {
       toast.error("Not Attended all Questions", {
         position: "top-right",
