@@ -53,6 +53,11 @@ const Questionnaire = () => {
           </div>
         ))}
       </div>
+      <div className="row common-margin-top">
+        <button type="button" className="btn btn-primary btn-text-bold">
+          Calculate the Score
+        </button>
+      </div>
     </div>
   );
 };
