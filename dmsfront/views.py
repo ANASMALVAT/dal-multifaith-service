@@ -2,12 +2,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView, Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from dmsfront.models import DalUser, Chaplain, Appointment, Event
+from dmsfront.models import DalUser, Chaplain, Appointment, Event, TimeSheet
 from .serializers import (
     DalUserSerializer,
     ChaplainSerializer,
     AppointmentSerializer,
-    EventSerializer
+    EventSerializer,
+    TimeSheetSerializer,
 )
 
 
@@ -88,14 +89,29 @@ class UserAppointmentDetails(APIView):
         return Response(serializer.data)
 
 
-@api_view(['GET'])
+class TimeSheetList(APIView):
+    def post(self, request):
+        serializer = TimeSheetSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class TimeSheetDetail(APIView):
+    def get(self, request, chaplain_id):
+        queryset = TimeSheet.objects.filter(chaplain_id=chaplain_id)
+        serializer = TimeSheetSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+@api_view(["GET"])
 def get_events(request):
     events = Event.objects.all()
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 def add_event(request):
     serializer = EventSerializer(data=request.data)
     if serializer.is_valid():
@@ -103,14 +119,14 @@ def add_event(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def get_event(request, id):
     event = Event.objects.filter(id=id)
     serializer = EventSerializer(event, many=True)
     return Response(serializer.data)
 
 
-@api_view(['PUT'])
+@api_view(["PUT"])
 def book_event(request, id):
     event = get_object_or_404(Event, id=id)
     data = {"available_seats": event.available_seats - 1}
